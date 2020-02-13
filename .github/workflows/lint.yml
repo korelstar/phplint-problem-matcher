@@ -1,0 +1,20 @@
+name: Test
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+    - name: Set up php${{ matrix.php-versions }}
+      uses: shivammathur/setup-php@v1
+    - name: add problem matcher for php lint
+      run: ./index.js
+    - name: lint PHP file with syntax error
+      run: php -l test/error.php || true
+
